@@ -1,0 +1,114 @@
+
+body{
+    margin: 0;
+  } 
+  .wrapper{
+    min-height: 100vh;
+    background: #ccc;
+    display: flex;
+    flex-direction: column;
+  }
+  /* .header{
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    height: 50px;
+    background: #666;
+    color: #fff;
+  } */
+  .content {
+    display: flex;
+    flex: 1;
+    background: #999;
+    color: #000; 
+  }
+  .actionBlock{
+    background-color: #666;
+    box-shadow: #666;
+    text-align: center ;
+    align-items: center;
+    height: 4rem;
+    padding: 1rem;
+    width: 30%;
+    margin: 1rem;
+    border-radius: 5px;
+    border: 1px solid #bab0b0;
+  }
+  .text-center{
+    text-align: left;
+  }
+  ul{
+    list-style: none;
+  }
+  .columns{
+    display: flex;
+    flex:1;
+  }
+  .red {
+    color: red;   
+  }
+ 
+  .main{
+   padding-top: 1rem;
+    flex: 1;
+    order: 2;
+    background: #eee;
+  }
+  .sidebar-first{
+    width: 20%;
+    background: #ccc;
+    order: 1;
+  }
+  .sidebar-second{ 
+    width: 20%;
+    order: 3;
+    background: #ddd;
+  }
+
+.image{
+    width:S;
+    height:3rem;
+}
+.custom-card{
+    width:100%;
+    
+    /* margin-left:20rem; */
+}
+/* .nav{
+    padding-left:3rem;
+} */
+.dp{
+   float: right;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    /* margin-top:-168px;  */
+}
+.list-comment{
+  list-style-type:none;
+  font-size:1.2rem;
+}
+/* .drop{
+    width:-100px;
+    padding-right:-10px;
+} */
+.inp{
+    width:70%
+}
+.add-comment{
+  display:flex;
+}
+.btn-comment{
+  margin-left:10px;
+  margin-bottom:4px;
+}
+.comment-drop{
+  margin-left:-100px;
+  margin-bottom:50px;
+  margin-top:-12px;
+}
+
+.dropdown-item{
+  font-size: medium;
+}
+

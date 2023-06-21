@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+     <link rel="stylesheet" href="index.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body ng-app="myApp" ng-controller="myCtr">
+    <div class="wrapper" >
+        <section class="content">
+          <div class="columns">
+            <main class="main">
+              <div class="row" style="width: 100%">
+                <div class="col-6 actionBlock" style="margin-left: 8rem" ng-class="{red: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">ASK QUESTION</div>
+                <div class="col-6 actionBlock"  ng-class="{red: hover1}" ng-mouseenter="hover1 = true" ng-mouseleave="hover1 = false" ng-click="show=true" >POST A UPDATE</div>
+              </div> 
+              <div class="form-group" ng-show="show">
+                <form>
+                  <label for="exampleFormControlTextarea1"></label>
+                  <textarea class="form-control textArea" id="exampleFormControlTextarea1" rows="3" placeholder="what are you sharing today?" ng-model="story"></textarea>                         
+                  <button style="float: right;" ng-click="addToFeed()">Post</button>
+                </form>
+              </div>
+              <br />
+              <hr />
+              <ul ng-repeat="i in history | orderBy: 'created_at':true ">
+                <li>
+                  <div class="card mt-4 custom-card">
+                    <div class="card-header row">
+                      <div class="col-1"><img class="image" src="graduated.png" alt="not found"/></div>
+                      <div class="col-8"><span ng-model="name" class="h4">{{name}}</span></div>
+                      
+                      <div class="dropdown col-3">
+                        <button class="btn  dropdown-toggle dp" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> 
+                        </button>
+                        <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton" >
+                          <li ng-click="deleteFeed(history.indexOf(i))"><a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Delete</a></li>
+                          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" ng-Click="setId(history.indexOf(i))"><i class="fas fa-edit"></i> {{ editMode ? 'Save' : 'Edit' }}</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <p id="content" class="card-text" ng-show="!editMode">{{ i.messg }}</p>
+                      <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
+                     
+                    </div>
+                    <div class="card-header">
+                      <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item nav" ng-click="incrementLike()">
+                          <a class="nav-link" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                        </li>
+                        <li class="nav-item nav" ng-click="decrementLike()">
+                          <a class="nav-link" href="#"><i class="fas fa-thumbs-down"></i> Dislike</a>
+                        </li>
+                        <li class="nav-item nav">
+                          <a class="nav-link" href="#" ng-click="showCommentInput = true;"><i class="fas fa-comment"></i> Comment</a>
+                        </li>
+                        <li class="nav-item nav">
+                          <a class="nav-link" href="#" ><i class="fas fa-share"></i> Share</a>
+                        </li>             
+                      </ul>
+                    </div>
+                    <span style="padding-left: 1.5rem"ng-show="count>0">{{count}} likes</span>
+                    <div class="card-footer add-comment" ng-show="showCommentInput" >
+                      <form ng-submit="addComment(history.indexOf(i))">
+                        <div class="row">
+                          <div class="col-9">
+                            <input class="form-control inp" ng-model="val" placeholder="Add a comment" />
+                          </div>
+                          <div class="col-3">
+                            <input type="submit" value="ADD" ng-click="addComment()" />
+                          </div>
+                          
+                        </div>
+                      </form>
+                      
+                    </div>
+                    <ul>
+                      <li class="list-comment" ng-repeat="j in history[history.indexOf(i)].comments">
+                        <div class="row">
+                          <div class="col-8">
+                            <p ng-show="!editModes">{{ j }}</p>
+                            <input ng-show="editModes" ng-model="editedComment" type="text">
+                          </div>
+                          <div class="col-2">
+                            <button class="dropdown-item" href="#" ng-click="deleteComment(history.indexOf(i),j)"><i class="fas fa-trash-alt"></i> Delete</a>
+                          </div>
+                          <div class="col-2">
+                            <a class="dropdown-item" href="#" ng-click="EditComment(history.indexOf(i),j)"><i class="fas fa-edit"></i> {{ editModes ? 'Save' : 'Edit' }}</a>
+                          </div>
+                        </div>  
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+                  <!--Edit modal pop up  -->
+              <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="editModalLabel">Edit Text</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <input class="form-control" ng-value="history[id].messg" ng-model="editedContent" type="text" >
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" ng-click="saveChanges()" data-bs-dismiss="modal">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </main>
+            <aside class="sidebar-first"></aside>
+            <aside class="sidebar-second"></aside>
+          </div>
+        </section> 
+    </div>
+    <script src="app.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
