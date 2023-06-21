@@ -12,32 +12,34 @@
     <title>Document</title>
 </head>
 <body ng-app="myApp" ng-controller="myCtr">
-    <div class="wrapper" >
-        <section class="content">
-          <div class="columns">
-            <main class="main">
-              <div class="row" style="width: 100%">
-                <div class="col-6 actionBlock" style="margin-left: 8rem" ng-class="{red: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">ASK QUESTION</div>
-                <div class="col-6 actionBlock"  ng-class="{red: hover1}" ng-mouseenter="hover1 = true" ng-mouseleave="hover1 = false" ng-click="show=true" >POST A UPDATE</div>
+    <div class="content">
+        <div class="row">
+          <div class="col-3 sidebar-first"></div>
+          <div class="col-6 main">
+              <div class="row">
+                <div class="col-6 actionBlock" ng-class="{red: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+                  <div class="option">ASK QUESTION</div></div>
+                <div class="col-6 actionBlock" ng-class="{red: hover1}" ng-mouseenter="hover1 = true" ng-mouseleave="hover1 = false" ng-click="show=true" >
+                  <div class="option">POST A UPDATE</div></div>
               </div> 
-              <div class="form-group" ng-show="show">
-                <form>
+              <div class="row" ng-show="show">
+                <form class="textBox">
                   <label for="exampleFormControlTextarea1"></label>
                   <textarea class="form-control textArea" id="exampleFormControlTextarea1" rows="3" placeholder="what are you sharing today?" ng-model="story"></textarea>                         
-                  <button style="float: right;" ng-click="addToFeed()">Post</button>
+                  <button type="button" class="btn btn-primary postBtn" style="float: right;" ng-click="addToFeed()">Post</button>
                 </form>
               </div>
               <br />
               <hr />
               <ul ng-repeat="i in history | orderBy: 'created_at':true ">
                 <li>
-                  <div class="card mt-4 custom-card">
+                  <div class="row card mt-4 custom-card">
                     <!-- FEED HEADER -->
                     <div class="card-header row">
-                      <div class="col-1"><img class="image" src="graduated.png" alt="not found"/></div>
-                      <div class="col-8"><span ng-model="name" class="h4">{{name[0]}}</span></div>
+                      <div class="col-2"><img class="image" src="graduated.png" alt="not found"/></div>
+                      <div class="col-7 name"><span ng-model="name">{{name[0]}}</span></div>
                       <div class="dropdown col-3">
-                        <button class="btn  dropdown-toggle dp" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> 
+                        <button class="btn dp dropdown-toggle" style="box-shadow: none;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> 
                         </button>
                         <ul class="dropdown-menu drop" aria-labelledby="dropdownMenuButton" >
                           <li ng-click="deleteFeed(history.indexOf(i))"><a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i> Delete</a></li>
@@ -51,27 +53,40 @@
                       <input id="contentInput" class="card-text" ng-show="editMode" ng-model="editedContent" type="text">
                     </div>
                     <!-- options LIKE DISLIKE COMMENT SHARE -->
-                    <div class="card-header">
+                    <div class="row card-header">
                       <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item nav" ng-click="incrementLike(i)">
-                          <a class="nav-link" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
-                        </li>
-                        <li class="nav-item nav" ng-click="decrementLike(i)">
-                          <a class="nav-link" href="#"><i class="fas fa-thumbs-down"></i> Dislike</a>
-                        </li>
-                        <li class="nav-item nav">
-                          <a class="nav-link" href="#" ng-click="showCommentInput = true;"><i class="fas fa-comment"></i> Comment</a>
-                        </li>
-                        <li class="nav-item nav">
-                          <a class="nav-link" href="#" ><i class="fas fa-share"></i> Share</a>
-                        </li>             
+                        <!-- <div class="row"> -->
+                          <div class="col-2">
+                            <li class="nav-item nav" ng-click="incrementLike(i)">
+                              <a class="nav-link" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                            </li>
+                          </div>
+                          <div class="col-3">
+                            <li class="nav-item nav" ng-click="decrementLike(i)">
+                              <a class="nav-link" href="#"><i class="fas fa-thumbs-down"></i> Dislike</a>
+                            </li>
+                          </div>
+                          <div class="col-4">
+                            <li class="nav-item nav">
+                              <a class="nav-link" href="#" ng-click="showCommentInput = true;"><i class="fas fa-comment"></i> Comment</a>
+                            </li>
+                          </div>
+                          <div class="col-3">
+                            <li class="nav-item nav" style="float: right;">
+                              <a class="nav-link" href="#" ><i class="fas fa-share"></i> Share</a>
+                            </li>
+                          </div>             
                       </ul>
                     </div>
                     <span style="padding-left: 1.5rem" ng-show="i.likes>0">{{i.likes}} likes</span>
                     <!-- comments section -->
-                    <div class="card-footer add-comment" ng-show="showCommentInput" ng-hide="!showCommentInput">
-                      <input class="form-control inp" ng-model="i.val" rows="3" placeholder="Add a comment" />
-                      <button class="btn btn-primary mt-2 btn-comment" ng-click=" showCommentInput = false; addComment(i)">Add Comment</button>   
+                    <div class="row card-footer add-comment" ng-show="showCommentInput" ng-hide="!showCommentInput">
+                      <div class="col-8">
+                        <input class="form-control inp" ng-model="i.val" rows="3" placeholder="Add a comment" />
+                      </div>
+                      <div class="col-4">
+                      <button class="btn btn-primary addCommentButton" ng-click=" showCommentInput = false; addComment(i)">Add</button> 
+                      </div>  
                     </div>
                     <!-- list of comments -->
                     <ul>
@@ -81,19 +96,19 @@
                             <p  ng-show="!j.editMode">{{ j.content }}</p>
                             <input ng-show="j.editMode" ng-model="j.editedComment" type="text"> 
                           </div>
-                          <div class="col-2">
-                            <button class="dropdown-item" href="#" ng-click="deleteComment(history.indexOf(i),j)"><i class="fas fa-trash-alt"></i> Delete</a>
+                          <div class="col-3">
+                            <a class="dropdown-item" href="#" ng-click="deleteComment(history.indexOf(i),j)"><i class="fas fa-trash-alt"></i></a>
                           </div>
-                          <div class="col-4">
-                            <div ng-if="!j.editMode">
-                              <a class="dropdown-item" href="#"  ng-click="j.editMode=true; EditComment(i,j)"><i class="fas fa-edit"></i> EDIT</a>
+                          <div class="col-3">
+                            <div ng-if="!j.editMode" >
+                              <a class="dropdown-item"  href="#"  ng-click="j.editMode=true; EditComment(i,j)"><i class="fas fa-edit"></i></a>
                             </div>
                             <div ng-if="j.editMode" class="row">
                               <div class="col-6">
-                                <a class="dropdown-item" href="#"  ng-click="j.editMode=false; saveComment(i,j)"> Save</a>
+                                <a class="dropdown-item" href="#"  ng-click="j.editMode=false; saveComment(i,j)"> <i class="fas fa-save"></i></a>
                               </div>
                               <div class="col-6" style="float:right">
-                                <a class="dropdown-item" href="#"  ng-click="j.editMode=false; cancelComment(i,j)"> X</a>
+                                <a class="dropdown-item" href="#"  ng-click="j.editMode=false; cancelComment(i,j)">X</a>
                               </div>
                             </div>
                           </div>
@@ -121,11 +136,9 @@
                       </div>
                     </div>
               </div>
-            </main>
-            <aside class="sidebar-first"></aside>
-            <aside class="sidebar-second"></aside>
           </div>
-        </section> 
+          <div class="col-3 sidebar-second"></div>
+        </div> 
     </div>
     <script src="app.js">
     </script>
