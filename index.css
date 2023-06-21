@@ -8,14 +8,6 @@ body{
     display: flex;
     flex-direction: column;
   }
-  /* .header{
-    text-align: center;
-    width: 100%;
-    padding: 10px;
-    height: 50px;
-    background: #666;
-    color: #fff;
-  } */
   .content {
     display: flex;
     flex: 1;
@@ -71,27 +63,18 @@ body{
 }
 .custom-card{
     width:100%;
-    
-    /* margin-left:20rem; */
 }
-/* .nav{
-    padding-left:3rem;
-} */
+
 .dp{
    float: right;
     width: 3rem;
     height: 3rem;
     text-align: center;
-    /* margin-top:-168px;  */
 }
 .list-comment{
   list-style-type:none;
   font-size:1.2rem;
 }
-/* .drop{
-    width:-100px;
-    padding-right:-10px;
-} */
 .inp{
     width:70%
 }
